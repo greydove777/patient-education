@@ -19,13 +19,17 @@
   background:#fff;
   border-top:1.5px solid var(--border);
   padding:14px 16px 20px;
-  z-index:999;
+  z-index:500;
   box-shadow:0 -4px 24px rgba(10,80,112,0.13);
   display:none;
+  pointer-events:none;
   animation:slideUp 0.3s ease;
 }
+.install-banner.show{
+  display:block;
+  pointer-events:auto;
+}
 @keyframes slideUp{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}
-.install-banner.show{display:block}
 .install-banner-inner{display:flex;align-items:center;gap:12px}
 .install-banner-icon{width:44px;height:44px;background:linear-gradient(130deg,var(--teal),#0a7090);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
 .install-banner-text{flex:1}
@@ -48,7 +52,7 @@
 /* ══ QR Code Modal ══ */
 .qr-overlay{
   position:fixed;inset:0;background:rgba(10,40,48,0.55);
-  z-index:998;display:none;align-items:center;justify-content:center;
+  z-index:600;display:none;align-items:center;justify-content:center;
   backdrop-filter:blur(3px);
 }
 .qr-overlay.show{display:flex}
@@ -81,7 +85,6 @@
   transition:background 0.18s;
 }
 .qr-trigger:hover{background:rgba(255,255,255,0.22)}
-</style>
 :root{
   --teal:#0a6e82;--teal-mid:#1090a8;--teal-light:#ddf0f5;--teal-pale:#f0fafc;
   --coral:#b83030;--coral-light:#fce8e8;
@@ -1000,14 +1003,14 @@ function isInStandaloneMode(){return window.matchMedia('(display-mode: standalon
 window.addEventListener('beforeinstallprompt',e=>{
   e.preventDefault();deferredPrompt=e;
   if(!sessionStorage.getItem('installDismissed'))
-    setTimeout(()=>banner.classList.add('show'),3000);
+    setTimeout(()=>banner.classList.add('show'),8000);
 });
 
 // iOS 沒有 beforeinstallprompt，改用自訂提示
 window.addEventListener('load',()=>{
   if(isIOS()&&!isInStandaloneMode()&&!sessionStorage.getItem('installDismissed')){
     document.getElementById('installBtnPrimary').textContent='📲 查看步驟';
-    setTimeout(()=>banner.classList.add('show'),3000);
+    setTimeout(()=>banner.classList.add('show'),8000);
   }
 });
 
